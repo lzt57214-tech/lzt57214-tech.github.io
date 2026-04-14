@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LI Zhaotian — Data Analytics & BI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: #2a2a2a;
+      --accent: #c8f542;
+      --accent2: #42f5a7;
+      --text: #f0f0f0;
+      --muted: #888;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(13,13,13,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* SECTIONS */
+    section {
+      min-height: 100vh;
+      padding: 120px 3rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    p { color: #bbb; margin-bottom: 1rem; }
+
+    /* HOME */
+    #home {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #home::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(200,245,66,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .headline-line { display: block; overflow: hidden; }
+    .headline-line span {
+      display: block;
+      animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .headline-line:nth-child(2) span { animation-delay: 0.1s; }
+    .headline-line:nth-child(3) span { animation-delay: 0.2s; }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);   opacity: 1; }
+    }
+    .accent-text { color: var(--accent); }
+    .home-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+      animation: fadeIn 1s 0.4s both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      animation: fadeIn 1s 0.55s both;
+    }
+    .tag {
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      animation: fadeIn 1s 0.65s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: #0d0d0d; border: 2px solid var(--accent); }
+    .btn-primary:hover { background: #d9ff5a; border-color: #d9ff5a; }
+    .btn-secondary { background: transparent; color: var(--text); border: 2px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ABOUT */
+    #about { min-height: auto; padding-top: 100px; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .edu-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      margin-top: 1rem;
+    }
+    .edu-block + .edu-block { margin-top: 0.75rem; }
+    .edu-block h4 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+    .edu-block .edu-degree { color: #ccc; font-size: 0.88rem; margin: 0; }
+    .edu-block .edu-meta { color: var(--muted); font-size: 0.82rem; margin: 0; }
+    .edu-block .edu-award {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--accent);
+      border: 1px solid rgba(200,245,66,0.3);
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+    }
+    .strengths { list-style: none; margin-top: 1rem; }
+    .strengths li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+    .strengths li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    /* SKILLS */
+    #skills { min-height: auto; padding-top: 100px; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .skill-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .skill-list li:last-child { border: none; }
+
+    /* PROJECTS */
+    #projects { min-height: auto; padding-top: 100px; }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .project-card:hover { border-color: rgba(200,245,66,0.3); }
+    .project-card:hover::before { opacity: 1; }
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .project-type { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); font-weight: 600; }
+    .project-time { font-size: 0.8rem; color: var(--muted); }
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    .project-field-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .project-field p { font-size: 0.88rem; color: #ccc; margin: 0; }
+    .outcome-highlight {
+      background: rgba(200,245,66,0.05);
+      border: 1px solid rgba(200,245,66,0.15);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-top: 1.2rem;
+    }
+    .outcome-highlight .project-field-label { color: var(--accent); }
+    .outcome-highlight p { color: var(--accent); font-weight: 500; margin: 0; font-size: 0.9rem; }
+    .project-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+    .project-link {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .project-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* PUBLICATIONS */
+    #publications { min-height: auto; padding-top: 100px; }
+    .pub-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+    .pub-card:hover { border-color: rgba(200,245,66,0.25); }
+    .pub-year {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: rgba(200,245,66,0.25);
+      min-width: 60px;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .pub-content h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+    .pub-content p { color: var(--muted); font-size: 0.85rem; margin: 0; }
+    .pub-content .pub-journal {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      border: 1px solid rgba(66,245,167,0.25);
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    /* RESUME */
+    #resume { min-height: auto; padding-top: 100px; }
+    .resume-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+    }
+    .resume-box p { color: var(--muted); margin-bottom: 2rem; }
+
+    /* CONTACT */
+    #contact { min-height: auto; padding-top: 100px; padding-bottom: 120px; }
+    .contact-grid { display: flex; flex-direction: column; gap: 1rem; max-width: 480px; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-icon { font-size: 1.2rem; width: 28px; text-align: center; }
+    .contact-label { font-size: 0.75rem; color: var(--muted); display: block; }
+    .contact-value { font-size: 0.95rem; font-weight: 500; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .divider { width: 60px; height: 2px; background: var(--accent); margin-bottom: 2rem; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.72rem; }
+      section { padding: 100px 1.5rem 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .project-grid { grid-template-columns: 1fr; }
+      .pub-card { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#home">LZ.</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="section-label">Open to Data Analytics &amp; BI Internship / Graduate Roles</div>
+    <h1>
+      <span class="headline-line"><span>LI Zhaotian —</span></span>
+      <span class="headline-line"><span>Data <span class="accent-text">Analytics</span></span></span>
+      <span class="headline-line"><span>&amp; BI Analyst</span></span>
+    </h1>
+    <p class="home-sub">
+      MSc student in AI &amp; Business Analytics at Lingnan University. I build ML models, NLP pipelines, and computer vision systems — and turn their outputs into insights that drive real decisions.
+    </p>
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">SQL</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">NLP / BERT</span>
+      <span class="tag">Deep Learning (LSTM)</span>
+      <span class="tag">Computer Vision (YOLO)</span>
+      <span class="tag">Data Storytelling</span>
+    </div>
+    <div class="cta-row">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About Me</div>
+    <div class="divider"></div>
+    <div class="about-grid">
+      <div>
+        <h2>Who I Am</h2>
+        <p>
+          I am a postgraduate student at Lingnan University pursuing an MSc in Artificial Intelligence and Business Analytics, with a published research background in life sciences. Within my first year of the programme I have already shipped three end-to-end ML projects — spanning time-series prediction, NLP sentiment classification, and real-time computer vision — giving me a broad and practical command of the modern analytics stack.
+        </p>
+        <p>
+          I bring a scientist's rigour to every analytical challenge: careful hypothesis design, reproducible pipelines, and clear communication of results to both technical and non-technical audiences. I am seeking roles in data analytics or business intelligence where these skills create measurable impact.
+        </p>
+
+        <div class="edu-block">
+          <h4>Lingnan University, Hong Kong</h4>
+          <p class="edu-degree">MSc in Artificial Intelligence and Business Analytics</p>
+          <p class="edu-meta">2025 – Present</p>
+        </div>
+        <div class="edu-block">
+          <h4>Hong Kong Metropolitan University</h4>
+          <p class="edu-degree">BSc (Hons) in Life Sciences</p>
+          <p class="edu-meta">2021 – 2025</p>
+        </div>
+        <div class="edu-block">
+          <h4>Hong Kong Baptist University</h4>
+          <p class="edu-degree">Associate of Science in Life Science</p>
+          <p class="edu-meta">2019 – 2021</p>
+          <span class="edu-award">🏆 Dean's List — Sem 2, 2019–2020</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:1rem;">My Strengths</h3>
+        <ul class="strengths">
+          <li>Building end-to-end ML pipelines — from data cleaning and EDA through model training, evaluation, and deployment</li>
+          <li>Applying NLP and deep learning (BERT, LSTM, YOLOv8) to real-world business and analytical problems</li>
+          <li>Communicating technical findings clearly in written reports and presentations for mixed audiences</li>
+          <li>Cross-disciplinary thinking: bridging life-science research precision with modern AI/analytics frameworks</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Skills</div>
+    <div class="divider"></div>
+    <h2>What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-label">Technical Skills</div>
+        <ul class="skill-list">
+          <li>Python (pandas, NumPy, matplotlib, seaborn)</li>
+          <li>Deep Learning — LSTM, Transformer / BERT</li>
+          <li>Computer Vision — YOLOv8, OpenCV</li>
+          <li>Machine Learning (scikit-learn)</li>
+          <li>NLP — fine-tuning, tokenisation, sentiment analysis</li>
+          <li>Statistical Analysis &amp; Hypothesis Testing</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Business Skills</div>
+        <ul class="skill-list">
+          <li>Problem Framing &amp; Research Design</li>
+          <li>Model Evaluation &amp; Metrics Reporting</li>
+          <li>Data-Driven Reporting &amp; Storytelling</li>
+          <li>EDA &amp; Feature Engineering</li>
+          <li>Academic Writing &amp; Presentation</li>
+          <li>Cross-functional Team Collaboration</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Tools &amp; Platforms</div>
+        <ul class="skill-list">
+          <li>PyTorch / Hugging Face Transformers</li>
+          <li>Ultralytics YOLOv8</li>
+          <li>Jupyter Notebook / Google Colab</li>
+          <li>Git &amp; GitHub</li>
+          <li>MySQL / PostgreSQL</li>
+          <li>Microsoft Excel &amp; Office Suite</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <div class="divider"></div>
+    <h2>Selected Work</h2>
+
+    <!-- PROJECT 1: LSTM Stock Price Prediction -->
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-type">Project 1</span>
+        <span class="project-time">2025</span>
+      </div>
+      <h3>Multi-Stock Price Prediction with LSTM Neural Network</h3>
+      <div class="project-grid">
+        <div class="project-field">
+          <div class="project-field-label">Problem</div>
+          <p>Stock price forecasting is a core challenge in quantitative finance. The team aimed to build a single unified deep learning model capable of predicting next-day closing prices across hundreds of S&amp;P 500 companies simultaneously — replacing company-specific models with one scalable, generalised system.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Data</div>
+          <p>Historical daily trading records for 505 S&amp;P 500 companies (497 retained after quality filtering); 600,000+ total samples. Closing prices range from $1–$1,500 across all major sectors, introducing significant cross-company price-scale variance.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Approach</div>
+          <p>LSTM time-series model on standardised, company-encoded sliding-window sequences. Pipeline: EDA → StandardScaler normalisation → sequence construction → LSTM training with early stopping → inverse-transform evaluation on original price scale.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">My Contribution</div>
+          <p>Contributed to EDA (price and sample distribution analysis across sectors), model evaluation framework design, and written analysis of error patterns across low-, medium-, and high-price stock segments.</p>
+        </div>
+      </div>
+      <div class="outcome-highlight">
+        <div class="project-field-label">Outcome / Impact</div>
+        <p>Model achieved R² = 0.9968, MAPE = 10.77%, RMSE = 7.26 on the test set — demonstrating strong trend-capture capability across diverse price ranges with a single unified architecture covering 505 companies.</p>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/lzt57214-tech/Stock-Price-Prediction-based-on-LSTM" target="_blank" class="project-link">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: BERT Financial Sentiment -->
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-type">Project 2</span>
+        <span class="project-time">2025</span>
+      </div>
+      <h3>Financial News Sentiment Classification via Fine-Tuned BERT</h3>
+      <div class="project-grid">
+        <div class="project-field">
+          <div class="project-field-label">Problem</div>
+          <p>Manual interpretation of financial headlines is slow, inconsistent, and unscalable. The team built an automated three-class sentiment classifier (positive / neutral / negative) for financial news, with a live RSS inference extension enabling real-time market sentiment monitoring.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Data</div>
+          <p>Financial PhraseBank (Kaggle): 4,846 English financial sentences annotated by 16 finance-domain experts. Class distribution: 59.4% neutral, 28.1% positive, 12.5% negative. Stratified 80/10/10 train-val-test split with fixed seed for reproducibility.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Approach</div>
+          <p>Full fine-tuning of bert-tiny (Hugging Face) using AdamW optimiser with linear warmup scheduling, gradient clipping (max norm 1.0), and macro-F1-based early stopping. Live RSS pipeline connected to trained classifier for real-time inference on new headlines.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">My Contribution</div>
+          <p>Led the writing of the full project report — covering system design, data pipeline documentation, model architecture, training methodology, quantitative evaluation, and error analysis of neutral-boundary misclassifications.</p>
+        </div>
+      </div>
+      <div class="outcome-highlight">
+        <div class="project-field-label">Outcome / Impact</div>
+        <p>Achieved test accuracy 75.88% and macro-F1 0.7322; neutral F1 = 0.8183, negative F1 = 0.7287. Early stopping at epoch 28 confirmed effective regularisation. Live RSS pipeline demonstrated real-world applicability for market sentiment monitoring.</p>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/lzt57214-tech/Financial-News-Sentiment-Analysis" target="_blank" class="project-link">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- PROJECT 3: YOLOv8 Mask Detection -->
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-type">Project 3</span>
+        <span class="project-time">2025</span>
+      </div>
+      <h3>CPU-Only Real-Time Mask Detection System (YOLOv8)</h3>
+      <div class="project-grid">
+        <div class="project-field">
+          <div class="project-field-label">Problem</div>
+          <p>Existing mask detection systems require GPU hardware, limiting deployment in cost-constrained public venues. The team developed a lightweight, CPU-only detection system deployable on ordinary PCs — removing the GPU bottleneck for hospitals, shopping malls, and transport hubs.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Data</div>
+          <p>Custom mask dataset: 1,591 images (1,257 train / 334 val), 3,326 annotated instances in YOLO standard format. Significant class imbalance (unmask:masked = 3.14:1) was identified through statistical analysis and factored into training design.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Approach</div>
+          <p>Transfer learning fine-tuning of YOLOv8n (Ultralytics) on custom dataset, fully CPU-only. Three-tier modular architecture (Data → Algorithm → Application). Deliverables: CLI, offline image/video inference, and PyQt5 GUI with QThread multi-threading to prevent UI freezing.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">My Contribution</div>
+          <p>Contributed to system architecture design, model training and validation pipeline, dataset statistical analysis (identified 3.14:1 class imbalance), performance benchmarking, and project documentation.</p>
+        </div>
+      </div>
+      <div class="outcome-highlight">
+        <div class="project-field-label">Outcome / Impact</div>
+        <p>Fine-tuned YOLOv8n achieved mAP@0.5 = 82.88%, mean precision = 88.65%, CPU inference speed = 37.13 FPS (26.94 ms/image) — meeting real-time requirements for deployment in public venues with zero GPU dependency.</p>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/lzt57214-tech/YOLOv8-Based-Mask-Detection-System" target="_blank" class="project-link">GitHub →</a>
+      </div>
+    </div>
+    <!-- PROJECT 4: Tiny-Helper LLM -->
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-type">Project 4</span>
+        <span class="project-time">2026</span>
+      </div>
+      <h3>Tiny-Helper: Intent Recognition &amp; Tool Calling in a 0.1B Small Language Model</h3>
+      <div class="project-grid">
+        <div class="project-field">
+          <div class="project-field-label">Problem</div>
+          <p>Mainstream tool-calling frameworks (function calling, ReAct) require models with tens of billions of parameters, making them impractical for edge devices and resource-constrained environments. The team explored whether a 0.1B small language model could autonomously recognise user intent and trigger external tool calls — validating the performance boundary of small-scale LLMs.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Data</div>
+          <p>Incremental pre-training: 7 million samples (Belle Chinese dataset + MiniMind original data, expanded from 1.4M). LoRA fine-tuning: 4,000 instruction samples (2,000 chat + 2,000 TTS-call intents) generated via GPT-4 with structured templates.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">Approach</div>
+          <p>Built on MiniMind (0.143B causal LM). Pipeline: incremental pre-training on A100 (~10 hrs) → LoRA fine-tuning (rank=8, alpha=16) on RTX 4060 Laptop (~4.8 mins, 3 epochs). Model outputs structured JSON for TTS calls or plain text for chat, parsed by a lightweight inference layer.</p>
+        </div>
+        <div class="project-field">
+          <div class="project-field-label">My Contribution</div>
+          <p>Responsible for LoRA fine-tuning and inference — configured LoRA adapters across all linear modules (q/k/v/o, gate/up/down, lm_head), ran fine-tuning experiments, and implemented the inference pipeline for intent parsing and TTS invocation.</p>
+        </div>
+      </div>
+      <div class="outcome-highlight">
+        <div class="project-field-label">Outcome / Impact</div>
+        <p>Chat quality average score 0.778 (85% pass rate); intent recognition accuracy 70% with 100% recall for chat intent. Identified data diversity as the key bottleneck (TTS recall 40%), providing empirical insights for scaling small-model tool calling to more complex tasks.</p>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/lzt57214-tech/Tiny-Helper-Based-on-MiniMind" target="_blank" class="project-link">GitHub →</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-label">Publications</div>
+    <div class="divider"></div>
+    <h2>Academic Research</h2>
+
+    <div class="pub-card">
+      <div class="pub-year">2024</div>
+      <div class="pub-content">
+        <h4>Seed-Induced Accumulation of β-Amyloid Exacerbates Oxidative Stress in Drosophila</h4>
+        <p>Research conducted at Shanghai Jiaotong University under Prof. Ping Yong. Used Drosophila as a model organism to investigate the seed mechanism of Aβ protein and its relationship to Alzheimer's disease pathogenesis.</p>
+        <span class="pub-journal">Transactions on Materials, Biotechnology and Life Sciences · Vol. 3, 2024 · pp. 439–448</span>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-year">2021</div>
+      <div class="pub-content">
+        <h4>Mechanism and Treatment of Anxiety Disorders</h4>
+        <p>Review paper produced under Associate Prof. Sreekanth Chalasani (Salk Institute). Covered brain mental disorders, gene sequencing technology, computer DNA sequence data analysis, and phylogenetic trees.</p>
+        <span class="pub-journal">E3S Web of Conferences · Vol. 292, NETID 2021 · DOI: 10.1051/e3sconf/202129203082</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <div class="section-label">Resume / CV</div>
+    <div class="divider"></div>
+    <h2>Download My CV</h2>
+    <div class="resume-box">
+      <p>Full resume available as a PDF — includes education, research experience, publications, and skills.</p>
+      <!-- ✏️ 上传简历PDF后把 href 改成实际链接 -->
+      <a href="resume.pdf" class="btn btn-primary" target="_blank">View Resume (PDF) ↗</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="divider"></div>
+    <h2>Let's Connect</h2>
+    <p style="margin-bottom:2rem; color:var(--muted);">Open to Data Analytics, Business Intelligence, and Data Science roles in Hong Kong and beyond.</p>
+    <div class="contact-grid">
+      <a href="mailto:lzt201427@163.com" class="contact-item">
+        <span class="contact-icon">✉</span>
+        <div>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">lzt201427@163.com</span>
+        </div>
+      </a>
+      <a href="tel:+85268719971" class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div>
+          <span class="contact-label">Phone</span>
+          <span class="contact-value">+852 6871 9971</span>
+        </div>
+      </a>
+      <a href="https://github.com/lzt57214-tech" target="_blank" class="contact-item">
+        <span class="contact-icon">⌥</span>
+        <div>
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value">github.com/lzt57214-tech</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 LI Zhaotian · Built with GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
